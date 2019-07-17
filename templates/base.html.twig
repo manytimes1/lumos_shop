@@ -1,16 +1,55 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>{% block title %Lumos Shop{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('/build/style.css') }}">
-            <link rel="stylesheet" href="{{ asset('/build/colors/megna-dark.css') }}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}Lumos Shop{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('/build/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/build/colors/megna-dark.css') }}">
+        <link rel="stylesheet" href="{{ asset('/build/custom.css') }}">
+    {% endblock %}
+</head>
+
+<body class="" id="{% block body_id %}{% endblock %}">
+
+{% block header %}
+    <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('index') }}">
+                    Home
+                </a>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mr-auto mt-md-0">
+                </ul>
+                <ul class="navbar-nav my-lg-0">
+                    <li class="nav-item text-uppercase">
+                        <a class="nav-link" href="{{ path('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item text-uppercase">
+                        <a class="nav-link" href="{{ path('register') }}">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        {% block body %}
+            <div class="row">
+                <div id="main" class="col-12">
+                    {% block main %}{% endblock %}
+                </div>
+            </div>
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+    </div>
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+{% endblock %}
