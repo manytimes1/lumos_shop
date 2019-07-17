@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table("users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements UserInterface
 {
@@ -21,14 +24,34 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=191, unique=true)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 255,
+     *      minMessage = "Username must be at least {{ limit }} characters",
+     *      maxMessage = "Username cannot be longer than {{ limit }} characters"
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=191, unique=true)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 255,
+     *      minMessage = "Email must be at least {{ limit }} characters",
+     *      maxMessage = "Email cannot be longer than {{ limit }} characters"
+     * )
      */
     private $email;
 
+    /**
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 255,
+     *      minMessage = "Password must be at least {{ limit }} characters",
+     *      maxMessage = "Password cannot be longer than {{ limit }} characters"
+     * )
+     */
     private $plainPassword;
 
     /**
@@ -38,11 +61,23 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=191)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "First Name must be at least {{ limit }} characters",
+     *      maxMessage = "First Name cannot be longer than {{ limit }} characters"
+     * )
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=191)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Last Name must be at least {{ limit }} characters",
+     *      maxMessage = "Last Name cannot be longer than {{ limit }} characters"
+     * )
      */
     private $lastName;
 
