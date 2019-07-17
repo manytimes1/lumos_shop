@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,33 @@ class RegisterController extends AbstractController
                 )
             );
 
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+            $roleRepository = $this->getDoctrine()->getRepository(Role::class);
             $em = $this->getDoctrine()->getManager();
+
+            if (null == $userRepository->findAll()) {
+                $adminRole = new Role();
+                $userRole = new Role();
+                $editorRole = new Role();
+
+                $adminRole->setName('ROLE_ADMIN');
+                $userRole->setName('ROLE_USER');
+                $editorRole->setName('ROLE_EDITOR');
+
+                $em->persist($adminRole);
+                $em->persist($userRole);
+                $em->persist($editorRole);
+
+                $user->addRole($adminRole);
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute('login');
+            }
+
+            $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
+            $user->addRole($userRole);
+
             $em->persist($user);
             $em->flush();
 
