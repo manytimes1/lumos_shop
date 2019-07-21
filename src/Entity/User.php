@@ -61,28 +61,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=191)
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 255,
-     *      minMessage = "First Name must be at least {{ limit }} characters",
-     *      maxMessage = "First Name cannot be longer than {{ limit }} characters"
-     * )
-     */
-    private $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=191)
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 255,
-     *      minMessage = "Last Name must be at least {{ limit }} characters",
-     *      maxMessage = "Last Name cannot be longer than {{ limit }} characters"
-     * )
-     */
-    private $lastName;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Role")
@@ -92,6 +70,11 @@ class User implements UserInterface
      *     )
      */
     private $roles;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $profile;
 
     public function __construct()
     {
@@ -151,28 +134,17 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFirstName(): ?string
+    /**
+     * @return mixed
+     */
+    public function getProfile()
     {
-        return $this->firstName;
+        return $this->profile;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setProfile(Profile $profile)
     {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
+        $this->profile = $profile;
     }
 
     /**

@@ -16,22 +16,21 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, ['label' => false])
             ->add('email', EmailType::class, ['label' => false])
+            ->add('username', TextType::class, ['label' => false])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => false],
                 'second_options' => ['label' => false],
             ])
-            ->add('firstName', TextType::class, ['label' => false])
-            ->add('lastName', TextType::class, ['label' => false]);
+             ->add('profile', ProfileType::class, ['label' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => User::class
         ]);
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Profile;
 use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
@@ -15,10 +16,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegisterController extends AbstractController
 {
     /**
-     * @Route("/lumos_shop/register", name="register")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     *
+     * @Route("/register", name="register")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -34,33 +38,29 @@ class RegisterController extends AbstractController
                 )
             );
 
-            $userRepository = $this->getDoctrine()->getRepository(User::class);
             $roleRepository = $this->getDoctrine()->getRepository(Role::class);
+
             $em = $this->getDoctrine()->getManager();
 
-            if (null == $userRepository->findAll()) {
-                $adminRole = new Role();
-                $userRole = new Role();
-                $editorRole = new Role();
+            if (null == $roleRepository->findAll()) {
+                $role = new Role();
+                $role->setName('ROLE_USER');
 
-                $adminRole->setName('ROLE_ADMIN');
-                $userRole->setName('ROLE_USER');
-                $editorRole->setName('ROLE_EDITOR');
-
-                $em->persist($adminRole);
-                $em->persist($userRole);
-                $em->persist($editorRole);
-
-                $user->addRole($adminRole);
-                $em->persist($user);
+                $em->persist($role);
                 $em->flush();
-
-                return $this->redirectToRoute('login');
             }
 
             $userRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
             $user->addRole($userRole);
 
+            $profile = new Profile();
+            $profile->setFirstName($user->getProfile()->getFirstName());
+            $profile->setLastName($user->getProfile()->getLastName());
+            $profile->setUser($user);
+
+            $em->persist($profile);
+
+            $user->setProfile($profile);
             $em->persist($user);
             $em->flush();
 

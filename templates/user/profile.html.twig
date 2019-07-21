@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-4 col-xlg-3 col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <center class="mt-4"> <img src="../assets/images/users/5.jpg" class="img-circle" width="150" />
+                        <h4 class="card-title mt-2">{{ user.profile }}</h4>
+                    </center>
+                </div>
+                <div>
+                    <hr>
+                </div>
+                <div class="card-body"> <small class="text-muted">Username </small>
+                    <h6>{{ user.username }}</h6> <small class="text-muted p-t-30 db">Email</small>
+                    <h6>{{ user.email }}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Update Profile</h4>
+                    <form class="form-horizontal form-material" action="{{ path('profile') }}" method="post">
+                        <div class="form-group">
+                            <label class="col-md-12">First Name</label>
+                            <div class="col-md-12">
+                                <input type="text" value="{{ user.profile.firstName }}" name="firstName" class="form-control"
+                                       placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Last Name</label>
+                            <div class="col-md-12">
+                                <input type="text" value="{{ user.profile.lastName }}" name="lastName" class="form-control"
+                                       placeholder="Last Name">
+                            </div>
+                        </div>
+{#                        <div class="form-group">#}
+{#                            <label class="col-md-12">Password</label>#}
+{#                            <div class="col-md-12">#}
+{#                                <input type="password" name="password" class="form-control"#}
+{#                                       placeholder="Password">#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="form-group">
+                            <label class="col-md-12">Phone</label>
+                            <div class="col-md-12">
+                                <input type="text" value="{{ user.profile.phone }}" name="phone" class="form-control"
+                                       placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Location</label>
+                            <div class="col-md-12">
+                                <input type="text" value="{{ user.profile.location }}" name="location" class="form-control"
+                                       placeholder="Location">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button class="btn btn-success waves-effect waves-light m-t-10" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

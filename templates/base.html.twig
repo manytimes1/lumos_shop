@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}Lumos Shop{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('/build/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('/build/colors/megna-dark.css') }}">
-        <link rel="stylesheet" href="{{ asset('/build/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/colors/megna-dark.css') }}">
     {% endblock %}
 </head>
 
@@ -26,12 +25,19 @@
                 </ul>
                 <ul class="navbar-nav my-lg-0">
                     {% if app.user %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="">My Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('logout') }}">Logout</a>
-                        </li>
+                        <ul class="navbar-nav my-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    User Options
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                    <ul class="dropdown-user">
+                                        <li><a href="{{ path('profile') }}"><i class="fa fa-user"></i> My Profile</a></li>
+                                        <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
                     {% else %}
                         <li class="nav-item text-uppercase">
                             <a class="nav-link" href="{{ path('login') }}">Login</a>
@@ -51,6 +57,7 @@
         {% block body %}
             <div class="row">
                 <div id="main" class="col-12">
+                    {{ include('default/_flash_messages.html.twig') }}
                     {% block main %}{% endblock %}
                 </div>
             </div>
