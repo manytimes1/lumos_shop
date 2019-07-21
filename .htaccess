@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^localhost/lumos_shop$ [NC,OR]
+    RewriteCond %{HTTP_HOST} ^localhost/lumos_shop$
+    RewriteCond %{REQUEST_URI} !public/
+    RewriteRule (.*) /public/$1 [L]
+</IfModule>

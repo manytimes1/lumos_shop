@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/lumos_shop/login", name="login")
+     * @Route("/login", name="login")
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -21,13 +21,12 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('user/login.html.twig', [
-            'last_username' => $lastUsername,
             'error' => $error
         ]);
     }
 
     /**
-     * @Route("/lumos_shop/logout", name="logout")
+     * @Route("/logout", name="logout")
      */
     public function logout()
     {
