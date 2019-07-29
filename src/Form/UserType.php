@@ -24,7 +24,8 @@ class UserType extends AbstractType
                 'first_options' => ['label' => false],
                 'second_options' => ['label' => false],
             ])
-             ->add('profile', ProfileType::class, ['label' => false]);
+             ->add('profile', ProfileType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

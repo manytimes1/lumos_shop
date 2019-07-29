@@ -19,7 +19,8 @@ class ProfileType extends AbstractType
             ->add('lastName', TextType::class, ['label' => false])
             ->add('phone', TextType::class, ['label' => false])
             ->add('location', TextType::class, ['label' => false])
-            ->add('picture', TextType::class, ['label' => false]);
+            ->add('picture', TextType::class)
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

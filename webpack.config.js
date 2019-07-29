@@ -1,8 +1,8 @@
 var Encore = require('@symfony/webpack-encore');
 
 Encore
-    .setOutputPath('public/build/')
-    .setPublicPath('/build')
+    .setOutputPath('public/')
+    .setPublicPath('/public')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
     .enableSassLoader()
@@ -10,8 +10,9 @@ Encore
     // whenever the contents of that file change. This allows you to use aggressive
     // caching strategies. Use Encore.isProduction() to enable it only for production.
     .enableVersioning(false)
-    .addStyleEntry('/style', './assets/scss/style.scss')
-    .addStyleEntry('/colors/megna-dark', './assets/scss/colors/megna-dark.scss')
+    .addEntry('/js/app', './assets/js/app.js')
+    .addStyleEntry('/css/style', './assets/scss/style.scss')
+    .addStyleEntry('/css/colors/megna-dark', './assets/scss/colors/megna-dark.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableIntegrityHashes(Encore.isProduction())

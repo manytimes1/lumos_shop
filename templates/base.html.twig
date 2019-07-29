@@ -6,6 +6,7 @@
     <title>{% block title %}Lumos Shop{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/themify-icons.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/colors/megna-dark.css') }}">
     {% endblock %}
 </head>
@@ -28,11 +29,22 @@
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    User Options
+                                    <img src="{{ profile.picture }}" alt="user" class="profile-pic" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                     <ul class="dropdown-user">
-                                        <li><a href="{{ path('profile') }}"><i class="fa fa-user"></i> My Profile</a></li>
+                                        <li>
+                                            <div class="dw-user-box">
+                                                <div class="u-img"><img src="{{ profile.picture }}" alt="user"></div>
+                                                <div class="u-text">
+                                                    <h4>{{ profile }}</h4>
+                                                    <p class="text-muted">{{ user.email }}</p>
+                                                    <a href="{{ path('profile') }}" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                            </div>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('user_change_password') }}"><i class="ti-settings"></i> Change Password</a></li>
+                                        <li role="separator" class="divider"></li>
                                         <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
                                     </ul>
                                 </div>
@@ -68,4 +80,5 @@
 {% block javascripts %}
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/jasny-bootstrap.js') }}"></script>
 {% endblock %}

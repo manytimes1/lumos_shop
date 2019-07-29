@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,6 +12,17 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        $user = $this->getUser();
+
+        if ($user) {
+            $profile = $user->getProfile();
+
+            return $this->render('home/index.html.twig', [
+                'user' => $user,
+                'profile' => $profile
+            ]);
+        }
+
         return $this->render('home/index.html.twig');
     }
 }

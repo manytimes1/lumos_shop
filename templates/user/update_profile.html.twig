@@ -1,0 +1,49 @@
+<div class="col-12 col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-center">Update Profile</h4>
+            <form class="form-horizontal form-material" method="post">
+                <div class="form-group">
+                    <label class="col-md-12">First Name</label>
+                    <div class="col-md-12">
+                        <input type="text" value="{{ profile.firstName }}" class="form-control" name="profile[firstName]"
+                               placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Last Name</label>
+                    <div class="col-md-12">
+                        <input type="text" value="{{ profile.lastName }}" class="form-control" name="profile[lastName]"
+                               placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Phone</label>
+                    <div class="col-md-12">
+                        <input type="text" value="{{ profile.phone }}" class="form-control" name="profile[phone]"
+                               placeholder="Phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Location</label>
+                    <div class="col-md-12">
+                        <input type="text" value="{{ profile.location }}" class="form-control" name="profile[location]"
+                               placeholder="Location">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-12">Picture</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control" name="profile[picture]">
+                    </div>
+                </div>
+                {{ form_row(form._token) }}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-success waves-effect waves-light m-t-10" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
