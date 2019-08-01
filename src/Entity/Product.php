@@ -23,14 +23,19 @@ class Product
     private $name;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $content;
+    private $model;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $pictureUrl;
+    private $description;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -38,32 +43,14 @@ class Product
     private $price;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="datetime")
      */
-    private $dateAdded;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $authorId;
-
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
-     */
-    private $author;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $viewCount;
-
-    public function __construct()
-    {
-        $this->dateAdded = new \DateTime('now');
-    }
+    private $addedOn;
 
     public function getId(): ?int
     {
@@ -82,26 +69,38 @@ class Product
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getModel(): ?string
     {
-        return $this->content;
+        return $this->model;
     }
 
-    public function setContent(?string $content): self
+    public function setModel(string $model): self
     {
-        $this->content = $content;
+        $this->model = $model;
 
         return $this;
     }
 
-    public function getPictureUrl(): ?string
+    public function getQuantity(): ?int
     {
-        return $this->pictureUrl;
+        return $this->quantity;
     }
 
-    public function setPictureUrl(string $pictureUrl): self
+    public function setQuantity(int $quantity): self
     {
-        $this->pictureUrl = $pictureUrl;
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -118,59 +117,32 @@ class Product
         return $this;
     }
 
-    public function getDateAdded(): ?\DateTimeInterface
+    public function getImage(): ?string
     {
-        return $this->dateAdded;
+        return $this->image;
     }
 
-    public function setDateAdded(\DateTimeInterface $dateAdded): self
+    public function setImage(string $image): self
     {
-        $this->dateAdded = $dateAdded;
+        $this->image = $image;
 
         return $this;
     }
 
-    public function getAuthorId(): ?int
+    public function getAddedOn(): ?\DateTimeInterface
     {
-        return $this->authorId;
+        return $this->addedOn;
     }
 
-    public function setAuthorId(int $authorId): self
+    public function setAddedOn(\DateTimeInterface $addedOn): self
     {
-        $this->authorId = $authorId;
+        $this->addedOn = $addedOn;
 
         return $this;
     }
 
-    public function getViewCount(): ?int
+    public function __construct()
     {
-        return $this->viewCount;
-    }
-
-    public function setViewCount(int $viewCount): self
-    {
-        $this->viewCount = $viewCount;
-
-        return $this;
-    }
-
-    /**
-     * @return User
-     */
-    public function getAuthor(): User
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param User $author
-     *
-     * @return Product
-     */
-    public function setAuthor(User $author = null): self
-    {
-        $this->author = $author;
-
-        return $this;
+        $this->addedOn = new \DateTime('now');
     }
 }

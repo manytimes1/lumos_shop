@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,17 +13,16 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $products = $em
+            ->getRepository(Product::class)
+            ->createQueryBuilder('e')
+            ->addOrderBy('e.addedOn', 'DESC')
+            ->getQuery()
+            ->execute();
 
-        if ($user) {
-            $profile = $user->getProfile();
-
-            return $this->render('home/index.html.twig', [
-                'user' => $user,
-                'profile' => $profile
-            ]);
-        }
-
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', [
+            'products' => $products
+        ]);
     }
 }

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Product</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('product_index') }}">Product</a></li>
+                <li class="breadcrumb-item active">Create</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add new product</h4>
+                    <form action="{{ path('product_create') }}" method="post">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="product[name]" placeholder="Product Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Model"
+                                                   name="product[model]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" placeholder="Quantity"
+                                                   name="product[quantity]" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <input type="url" class="form-control" placeholder="Image"
+                                                   name="product[image]" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea type="text" rows="3" class="form-control" name="product[description]"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input type="number" step="any" class="form-control" placeholder="Price"
+                                       name="product[price]">
+                            </div>
+                        </div>
+                        {{ form_row(form._token) }}
+
+                        <button class="btn btn-success waves-effect waves-light" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

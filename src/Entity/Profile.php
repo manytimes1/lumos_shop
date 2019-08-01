@@ -38,6 +38,11 @@ class Profile
     private $location;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $picture;
+
+    /**
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -97,6 +102,18 @@ class Profile
     public function setLocation($location): void
     {
         $this->location = $location;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 
     /**

@@ -76,9 +76,15 @@ class User implements UserInterface
      */
     private $profile;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="user")
+     */
+    private $createdProducts;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -147,6 +153,11 @@ class User implements UserInterface
         $this->profile = $profile;
     }
 
+    public function getCreatedProducts()
+    {
+        return $this->createdProducts;
+    }
+
     /**
      * Returns the roles granted to the user.
      *
@@ -177,6 +188,16 @@ class User implements UserInterface
         $this->roles[] = $role;
 
         return $this;
+    }
+
+    public function isAdmin()
+    {
+        return in_array('ROLE_ADMIN', $this->getRoles());
+    }
+
+    public function isEditor()
+    {
+        return in_array('ROLE_EDITOR', $this->getRoles());
     }
 
     /**
