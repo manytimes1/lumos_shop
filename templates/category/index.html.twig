@@ -39,7 +39,7 @@
                                                         <td>{{ category.description }}</td>
                                                         <td>
                                                             <div class="button-group">
-                                                                <a href="" class="btn waves-effect waves-light btn-warning">
+                                                                <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn waves-effect waves-light btn-warning">
                                                                     Edit
                                                                 </a>
                                                                 {% if app.user.isAdmin() %}
