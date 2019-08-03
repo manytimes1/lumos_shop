@@ -1,0 +1,22 @@
+{% if app.user %}
+    {% if app.getUser().isAdmin() or app.getUser().isEditor() %}
+        <aside class="left-sidebar">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li>
+                            <a href="{{ path('index') }}" aria-expanded="false">
+                                <i class="fas fa-home"></i><span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('product_index') }}" aria-expanded="false">
+                                <i class=""></i><span class="hide-menu">Product</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+    {% endif %}
+{% endif %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Product;
+use App\Entity\User;
 use App\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,11 +20,12 @@ class ProductController extends AbstractController
      */
     public function index()
     {
+        /** @var User $user */
         $user = $this->getUser();
 
-        if (!$user->isAdmin() || !$user->isEditor()) {
-            return $this->redirectToRoute('index');
-        }
+       if (!$user->isAdmin() && !$user->isEditor()) {
+           return $this->redirectToRoute('index');
+       }
 
         $products = $this->getDoctrine()
             ->getRepository(Product::class)
@@ -43,9 +45,10 @@ class ProductController extends AbstractController
      */
     public function create(Request $request)
     {
+        /** @var User $user */
         $user = $this->getUser();
 
-        if (!$user->isAdmin() || !$user->isEditor()) {
+        if (!$user->isAdmin() && !$user->isEditor()) {
             return $this->redirectToRoute('index');
         }
 
@@ -64,5 +67,58 @@ class ProductController extends AbstractController
         return $this->render('product/create.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/product/edit/{id}", name="product_edit")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     */
+    public function edit(Request $request, Product $product)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user->isAdmin() && !$user->isEditor()) {
+            return $this->redirectToRoute('index');
+        }
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('product_index', [
+                'id' => $product->getId()
+            ]);
+        }
+
+        return $this->render('product/edit.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product
+        ]);
+    }
+
+    /**
+     * @Route("/product/delete/{id}", methods={"POST"}, name="product_delete")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function remove(Product $product)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user->isAdmin()) {
+            return $this->redirectToRoute('index');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($product);
+        $em->flush();
+
+        return $this->redirectToRoute('product_index');
     }
 }

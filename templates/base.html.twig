@@ -5,80 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}Lumos Shop{% endblock %}</title>
     {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('/css/themify-icons.css') }}">
         <link rel="stylesheet" href="{{ asset('/css/colors/megna-dark.css') }}">
     {% endblock %}
 </head>
 
-<body class="" id="{% block body_id %}{% endblock %}">
+<body class="fix-header fix-sidebar card-no-border">
+    <div id="main-wrapper">
+        {{ include('layouts/header.html.twig') }}
+        {{ include('layouts/sidebar.html.twig') }}
 
-{% block header %}
-    <header class="topbar">
-        <nav class="navbar top-navbar navbar-expand-md navbar-light">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{{ path('index') }}">
-                    Home
-                </a>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                {% block body %}
+                    <div class="">
+                        <div id="main" class="">
+                            {{ include('default/_flash_messages.html.twig') }}
+                            {% block main %}{% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
             </div>
-            <div class="navbar-collapse">
-                <ul class="navbar-nav mr-auto mt-md-0">
-                </ul>
-                <ul class="navbar-nav my-lg-0">
-                    {% if app.user %}
-                        <ul class="navbar-nav my-lg-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ profile.picture }}" alt="user" class="profile-pic" />
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right animated flipInY">
-                                    <ul class="dropdown-user">
-                                        <li>
-                                            <div class="dw-user-box">
-                                                <div class="u-img"><img src="{{ profile.picture }}" alt="user"></div>
-                                                <div class="u-text">
-                                                    <h4>{{ profile }}</h4>
-                                                    <p class="text-muted">{{ user.email }}</p>
-                                                    <a href="{{ path('profile') }}" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
-                                            </div>
-                                        </li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="{{ path('user_change_password') }}"><i class="ti-settings"></i> Change Password</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    {% else %}
-                        <li class="nav-item text-uppercase">
-                            <a class="nav-link" href="{{ path('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item text-uppercase">
-                            <a class="nav-link" href="{{ path('register') }}">Register</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </header>
-{% endblock %}
-
-<div class="page-wrapper">
-    <div class="container-fluid">
-        {% block body %}
-            <div class="row">
-                <div id="main" class="col-12">
-                    {{ include('default/_flash_messages.html.twig') }}
-                    {% block main %}{% endblock %}
-                </div>
-            </div>
-        {% endblock %}
+        </div>
     </div>
-</div>
 
 {% block javascripts %}
     <script src="{{ asset('/js/jquery.min.js') }}"></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/js/jasny-bootstrap.js') }}"></script>
+    <script src="{{ asset('/js/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('/js/sticky-kit.min.js') }}"></script>
+    <script src="{{ asset('/js/custom.min.js') }}"></script>
+    <script src="{{ asset('/js/some.js') }}"></script>
 {% endblock %}

@@ -1,0 +1,44 @@
+{% block header %}
+    <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('index') }}">
+                    Home
+                </a>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav mr-auto mt-md-0">
+                </ul>
+                <ul class="navbar-nav my-lg-0">
+                    {% if app.user %}
+                        <ul class="navbar-nav my-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    My Profile
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                    <ul class="dropdown-user">
+                                        <li>
+                                            <a href="{{ path('profile') }}"><i class="ti-user"></i> View Profile</a>
+                                        </li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('user_change_password') }}"><i class="ti-settings"></i> Change Password</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <li class="nav-item text-uppercase">
+                            <a class="nav-link" href="{{ path('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item text-uppercase">
+                            <a class="nav-link" href="{{ path('register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+{% endblock %}

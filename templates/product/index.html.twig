@@ -2,14 +2,14 @@
 
 {% block main %}
     <div class="row page-titles">
-    <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor mb-0 mt-0">Product</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
-            <li class="breadcrumb-item active">Product</li>
-        </ol>
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Product</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item active">Product</li>
+            </ol>
+        </div>
     </div>
-</div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -36,6 +36,14 @@
                                         <td>{{ product.model }}</td>
                                         <td>{{ product.price }}</td>
                                         <td>{{ product.quantity }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn waves-effect waves-light btn-warning">Edit</a>
+                                                {% if app.user.isAdmin() %}
+                                                    {{ include('product/delete.html.twig') }}
+                                                {% endif %}
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
