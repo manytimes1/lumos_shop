@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\Tests\Compiler\A;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -77,14 +78,19 @@ class User implements UserInterface
     private $profile;
 
     /**
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="user")
+     */
+    private $carts;
+
+    /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="user")
      */
     private $createdProducts;
 
     public function __construct()
     {
+        $this->carts = new ArrayCollection();
         $this->roles = new ArrayCollection();
-
     }
 
     public function getId(): ?int

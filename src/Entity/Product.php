@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +57,11 @@ class Product
     private $category;
 
     /**
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="product")
+     */
+    private $carts;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isAvailable;
@@ -67,6 +73,7 @@ class Product
 
     public function __construct()
     {
+        $this->carts = new ArrayCollection();
         $this->addedOn = new \DateTime('now');
     }
 
