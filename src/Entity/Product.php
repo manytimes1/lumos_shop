@@ -56,6 +56,11 @@ class Product
     private $category;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAvailable;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $addedOn;
@@ -138,6 +143,18 @@ class Product
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getIsAvailable(): ?bool
+    {
+        return $this->isAvailable;
+    }
+
+    public function setIsAvailable(bool $isAvailable): self
+    {
+        $this->isAvailable = $isAvailable;
 
         return $this;
     }

@@ -6,10 +6,12 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Product;
-use Doctrine\DBAL\Types\DecimalType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,13 +38,20 @@ class ProductType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
+                'required' => false,
                 'attr' => [
-                    'placeholder' => 'Description'
+                    'placeholder' => 'Description',
                 ]
             ])
-            ->add('price', IntegerType::class, [
+            ->add('price', NumberType::class, [
                 'attr' => [
-                    'placeholder' => 'Price'
+                    'placeholder' => 'Price',
+                ]
+            ])
+            ->add('isAvailable', ChoiceType::class, [
+                'choices' => [
+                    'In Stock' => true,
+                    'Out of Stock' => false
                 ]
             ])
             ->add('image', TextType::class)

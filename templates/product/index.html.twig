@@ -26,6 +26,7 @@
                                 <th>Model</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Availability</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -38,6 +39,13 @@
                                     <td>{{ product.model }}</td>
                                     <td>{{ product.price }}</td>
                                     <td>{{ product.quantity }}</td>
+                                    <td>
+                                        {% if product.isAvailable %}
+                                            In Stock
+                                        {% else %}
+                                            Out of Stock
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <div class="button-group">
                                             <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn waves-effect waves-light btn-warning">Edit</a>
