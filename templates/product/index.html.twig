@@ -19,33 +19,35 @@
                     <div class="table-responsive m-t-40">
                         <table class="table display table-bordered table-striped no-wrap">
                             <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Model</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Product Category</th>
+                                <th>Model</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {% for product in products %}
-                                    <tr>
-                                        <td><img src="{{ product.image }}" alt="product" width="40px" height="40px"></td>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.model }}</td>
-                                        <td>{{ product.price }}</td>
-                                        <td>{{ product.quantity }}</td>
-                                        <td>
-                                            <div class="button-group">
-                                                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn waves-effect waves-light btn-warning">Edit</a>
-                                                {% if app.user.isAdmin() %}
-                                                    {{ include('product/delete.html.twig') }}
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            {% for product in products %}
+                                <tr>
+                                    <td><img src="{{ product.image }}" alt="product" width="40px" height="40px"></td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.category }}</td>
+                                    <td>{{ product.model }}</td>
+                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.quantity }}</td>
+                                    <td>
+                                        <div class="button-group">
+                                            <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn waves-effect waves-light btn-warning">Edit</a>
+                                            {% if app.user.isAdmin() %}
+                                                {{ include('product/delete.html.twig') }}
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

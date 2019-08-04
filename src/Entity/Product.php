@@ -48,9 +48,22 @@ class Product
     private $image;
 
     /**
+     * Many products have one category
+     *
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $addedOn;
+
+    public function __construct()
+    {
+        $this->addedOn = new \DateTime('now');
+    }
 
     public function getId(): ?int
     {
@@ -141,8 +154,15 @@ class Product
         return $this;
     }
 
-    public function __construct()
+    public function getCategory(): ?Category
     {
-        $this->addedOn = new \DateTime('now');
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }

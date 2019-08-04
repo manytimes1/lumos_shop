@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
@@ -97,6 +98,14 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
             'product' => $product
         ]);
+    }
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     */
+    public function show()
+    {
+        //
     }
 
     /**

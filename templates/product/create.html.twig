@@ -16,41 +16,42 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Add new product</h4>
-                    <form action="{{ path('product_create') }}" method="post">
+                    <form method="post">
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="product[name]" placeholder="Product Name" required>
+                                            {{ form_row(form.name) }}
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Model"
-                                                   name="product[model]" required>
+                                            {{ form_row(form.model) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-12">
+                                        <div class="form-group">
+                                            {{ form_row(form.category) }}
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <input type="number" class="form-control" placeholder="Quantity"
-                                                   name="product[quantity]" required>
+                                            {{ form_row(form.quantity) }}
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <input type="url" class="form-control" placeholder="Image"
-                                                   name="product[image]" required>
+                                            {{ form_row(form.image) }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea type="text" rows="3" class="form-control" name="product[description]"></textarea>
+                                    {{ form_row(form.description) }}
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
-                                <input type="number" step="any" class="form-control" placeholder="Price"
-                                       name="product[price]">
+                                {{ form_row(form.price) }}
                             </div>
                         </div>
                         {{ form_row(form._token) }}
