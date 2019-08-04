@@ -57,7 +57,7 @@ class Product
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="Cart", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Cart", mappedBy="product", cascade={"persist"})
      */
     private $carts;
 
@@ -140,6 +140,13 @@ class Product
         $this->price = $price;
 
         return $this;
+    }
+
+    public function totalPrice()
+    {
+        $total = $this->getQuantity() * $this->getPrice();
+
+        return $total;
     }
 
     public function getImage(): ?string

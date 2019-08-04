@@ -39,22 +39,18 @@ class Cart
         return $this->product;
     }
 
-    public function setProduct(?Product $product): self
+    public function setProduct(Product $product)
     {
         $this->product = $product;
-
-        return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser()
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user)
     {
         $this->user = $user;
-
-        return $this;
     }
 }
