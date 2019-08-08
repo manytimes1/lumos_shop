@@ -8,14 +8,13 @@ use App\Entity\Category;
 use App\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductType extends AbstractType
 {
@@ -35,6 +34,12 @@ class ProductType extends AbstractType
             ->add('quantity', IntegerType::class, [
                 'attr' => [
                     'placeholder' => 'Quantity'
+                ],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[1-9]\d*$/',
+                        'message' => "This field cannot be zero or negative number."
+                    ])
                 ]
             ])
             ->add('description', TextareaType::class, [
@@ -46,12 +51,6 @@ class ProductType extends AbstractType
             ->add('price', NumberType::class, [
                 'attr' => [
                     'placeholder' => 'Price',
-                ]
-            ])
-            ->add('isAvailable', ChoiceType::class, [
-                'choices' => [
-                    'In Stock' => true,
-                    'Out of Stock' => false
                 ]
             ])
             ->add('image', TextType::class)

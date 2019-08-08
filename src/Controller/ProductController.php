@@ -3,11 +3,10 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\User;
 use App\Form\ProductType;
+use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,6 +57,8 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setIsAvailable(1);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
@@ -101,11 +102,15 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/product/{id}", name="product_show")
+     * @Route("/product/{id}", name="product_details")
      */
-    public function show()
+    public function details(ProductRepository $productRepository, Product $product)
     {
-        //
+        $currentProduct = $productRepository->find($product);
+
+        return $this->render('product/details.html.twig', [
+            'product' => $currentProduct
+        ]);
     }
 
     /**

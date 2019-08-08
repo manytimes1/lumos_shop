@@ -40,7 +40,7 @@
                                     <td>{{ product.price }}</td>
                                     <td>{{ product.quantity }}</td>
                                     <td>
-                                        {% if product.isAvailable %}
+                                        {% if product.quantity > 0 %}
                                             In Stock
                                         {% else %}
                                             Out of Stock
