@@ -21,16 +21,13 @@ class CartController extends AbstractController
         $cartProducts = $cartRepository->findBy(['user' => $user]);
 
         $totalPrice = 0;
-        $products = [];
 
         for ($i = 0; $i < count($cartProducts); $i++) {
-            $product = $cartProducts[$i]->getProduct();
-            $products[] = $product;
-            $totalPrice += $product->totalPrice();
+            $totalPrice += $cartProducts[$i]->totalPrice();
         }
 
         return $this->render('cart/index.twig', [
-            'products' => $products,
+            'carts' => $cartProducts,
             'total' => $totalPrice
         ]);
     }
@@ -44,6 +41,10 @@ class CartController extends AbstractController
      */
     public function addProduct(Product $product, CartRepository $cartRepository)
     {
+        if (!$product->getIsAvailable()) {
+            return $this->redirectToRoute('index');
+        }
+
         $user = $this->getUser();
         $cart = $cartRepository->findOneBy([
             'product' => $product,
@@ -56,10 +57,35 @@ class CartController extends AbstractController
             $cart->setUser($user);
         }
 
+        $cart->setOrderQuantity(1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($cart);
         $em->flush();
 
         return $this->redirectToRoute('index');
+    }
+
+    /**
+     * @Route("/cart/remove/{id}", name="cart_product_remove")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param CartRepository $cartRepository
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeProduct(CartRepository $cartRepository, Product $product)
+    {
+        $user = $this->getUser();
+        $cartProduct = $cartRepository->findOneBy([
+            'product' => $product,
+            'user' => $user
+        ]);
+
+        if (null !== $cartProduct) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($cartProduct);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('cart_index');
     }
 }

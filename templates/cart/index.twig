@@ -21,14 +21,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for product in products %}
+                                {% for cart in carts %}
                                     <tr>
-                                        <td><img src="{{ product.image }}" alt="product" width="40px" height="40px"></td>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.model }}</td>
-                                        <td>{{ product.quantity }}</td>
-                                        <td>{{ product.price|number_format(2, '.', ',') }}</td>
-                                        <td>{{ product.totalPrice|number_format(2, '.', ',') }}</td>
+                                        <td><img src="{{ cart.product.image }}" alt="product" width="40px" height="40px"></td>
+                                        <td>{{ cart.product.name }}</td>
+                                        <td>{{ cart.product.model }}</td>
+                                        <td>{{ cart.orderQuantity }}</td>
+                                        <td>{{ cart.product.price }}</td>
+                                        <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                {{ include('cart/delete_product.html.twig') }}
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -44,6 +49,7 @@
                         <div class="clearfix"></div>
                         <hr/>
                         <div class="text-right">
+                            <a href="{{ path('index') }}" class="btn btn-primary">Cancel</a>
                             <button type="submit" class="btn btn-danger">Checkout</button>
                         </div>
                     </div>
