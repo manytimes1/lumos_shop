@@ -8,7 +8,7 @@
                 <hr/>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="table-responsive" style="clear: both">
+                        <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
@@ -26,14 +26,15 @@
                                         <td><img src="{{ cart.product.image }}" alt="product" width="40px" height="40px"></td>
                                         <td>{{ cart.product.name }}</td>
                                         <td>{{ cart.product.model }}</td>
-                                        <td>{{ cart.orderQuantity }}</td>
-                                        <td>{{ cart.product.price }}</td>
-                                        <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
                                         <td>
-                                            <div class="button-group">
-                                                {{ include('cart/delete_product.html.twig') }}
+                                            <div class="form-group">
+                                                <select id="quantity_id" class="form-control">
+                                                    <option value="1">1</option>
+                                                </select>
                                             </div>
                                         </td>
+                                        <td>{{ cart.product.price }}</td>
+                                        <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -49,8 +50,10 @@
                         <div class="clearfix"></div>
                         <hr/>
                         <div class="text-right">
-                            <a href="{{ path('index') }}" class="btn btn-primary">Cancel</a>
-                            <button type="submit" class="btn btn-danger">Checkout</button>
+                            <form action="{{ url('buy_all_products') }}" method="post">
+                                <a href="{{ path('index') }}" class="btn btn-primary">Cancel</a>
+                                <button type="submit" class="btn btn-danger">Checkout</button>
+                            </form>
                         </div>
                     </div>
                 </div>

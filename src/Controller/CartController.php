@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Repository\CartRepository;
+use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -87,5 +89,45 @@ class CartController extends AbstractController
         }
 
         return $this->redirectToRoute('cart_index');
+    }
+
+    /**
+     * @Route("/cart/buyAll", name="buy_all_products")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param CartRepository $cartRepository
+     * @param ProductRepository $productRepository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function buyAllProducts(CartRepository $cartRepository, ProductRepository $productRepository)
+    {
+        $user = $this->getUser();
+        $products = $productRepository->findAll();
+        $cartProducts = $cartRepository->findBy([
+            'product' => $products,
+            'user' => $user
+        ]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($cartProducts as $cartProduct) {
+            /** @var Cart $cartProduct */
+            $product = $cartProduct->getProduct();
+            $product->setQuantity($product->getQuantity() - $cartProduct->getOrderQuantity());
+
+            if ($product->getQuantity() === 0) {
+                $product->setIsAvailable(0);
+            }
+
+            $order = new Order();
+            $order->setProduct($product);
+            $order->setUser($user);
+
+            $em->persist($order);
+            $em->remove($cartProduct);
+        }
+
+        $em->flush();
+
+        return $this->redirectToRoute('index');
     }
 }
