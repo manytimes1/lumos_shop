@@ -101,6 +101,7 @@ class CartController extends AbstractController
     public function buyAllProducts(CartRepository $cartRepository, ProductRepository $productRepository)
     {
         $user = $this->getUser();
+        $profile = $user->getProfile();
         $products = $productRepository->findAll();
         $cartProducts = $cartRepository->findBy([
             'product' => $products,
@@ -110,9 +111,19 @@ class CartController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         foreach ($cartProducts as $cartProduct) {
+            if ($cartProduct->totalPrice() > $profile->getCash()) {
+                $this->addFlash('danger', "You don't have enough money to this action.");
+
+                return $this->redirectToRoute('cart_index');
+            }
+
+            $remainingCash = $profile->getCash() - $cartProduct->totalPrice();
+            $profile->setCash($remainingCash);
+
             /** @var Cart $cartProduct */
             $product = $cartProduct->getProduct();
-            $product->setQuantity($product->getQuantity() - $cartProduct->getOrderQuantity());
+            $remainingQuantity = $product->getQuantity() - $cartProduct->getOrderQuantity();
+            $product->setQuantity($remainingQuantity);
 
             if ($product->getQuantity() === 0) {
                 $product->setIsAvailable(0);
