@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
+use App\Repository\CategoryRepository;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -11,15 +12,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index()
+    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
-        $em = $this->getDoctrine()->getManager();
-        $products = $em
-            ->getRepository(Product::class)
-            ->createQueryBuilder('e')
-            ->addOrderBy('e.addedOn', 'DESC')
-            ->getQuery()
-            ->execute();
+        $category = $categoryRepository->findAll();
+        $products = $productRepository->findBy([
+            'category' => $category
+        ]);
 
         return $this->render('home/index.html.twig', [
             'products' => $products

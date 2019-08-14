@@ -1,0 +1,35 @@
+<div class="tab-pane active" id="computers" role="tabpanel">
+    <div class="row">
+        {% for product in products %}
+            {% if product.category.name == 'Computers' and product.isAvailable() %}
+                <div class="col-md-6 col-lg-6 col-xlg-4">
+                    <div class="card card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-3 text-center">
+                                <a href="{{ path('product_details', {id: product.id} ) }}">
+                                    <img src="{{ product.image }}" alt="product" class="img img-responsive">
+                                </a>
+                            </div>
+                            <div class="col-md-8 col-lg-9">
+                                <h4 class="mb-0">Name: {{ product.name }}</h4>
+                                Model: {{ product.model }}
+                                <p>Quantity: {{ product.quantity }}</p>
+
+                                <p>Price: {{ product.price }}</p>
+
+                                {% if app.user %}
+                                    <div class="float-right">
+                                        <a href="{{ path('add_to_cart', {id: product.id}) }}"
+                                           class="btn waves-effect waves-light btn-rounded btn-outline-secondary">
+                                            ADD TO CART
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

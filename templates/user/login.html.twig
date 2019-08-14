@@ -4,7 +4,7 @@
 
 {% block main %}
     {% if error %}
-        <div class="invalid-feedback">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     <div class="login-box card">
@@ -13,7 +13,7 @@
                 <h3 class="box-title mb-3 text-center">Login</h3>
                 <div class="form-group">
                     <div class="col-xs-12">
-                        <input type="text" value="{{ last_username }}" class="form-control" name="_username"
+                        <input type="text" value="" class="form-control" name="_username"
                                placeholder="Username" required="required">
                     </div>
                 </div>

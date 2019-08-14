@@ -35,6 +35,11 @@
                                         </td>
                                         <td>{{ cart.product.price }}</td>
                                         <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                {{ include('cart/delete_product.html.twig') }}
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
