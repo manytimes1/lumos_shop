@@ -23,7 +23,7 @@ class Profile
     private $firstName;
 
     /**
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", nullable=true, type="string", length=255)
      */
     private $lastName;
 
@@ -33,14 +33,19 @@ class Profile
     private $phone;
 
     /**
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(name="location", nullable=true, type="string", length=255)
      */
     private $location;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $picture;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $cash;
 
     /**
      *
@@ -112,6 +117,18 @@ class Profile
     public function setPicture($picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getCash()
+    {
+        return $this->cash;
+    }
+
+    public function setCash($cash): self
+    {
+        $this->cash = $cash;
 
         return $this;
     }

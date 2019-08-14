@@ -56,6 +56,7 @@ class RegisterController extends AbstractController
             $profile = new Profile();
             $profile->setFirstName($user->getProfile()->getFirstName());
             $profile->setLastName($user->getProfile()->getLastName());
+            $profile->setCash(1000);
             $profile->setUser($user);
 
             $em->persist($profile);
