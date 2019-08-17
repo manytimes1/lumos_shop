@@ -2,16 +2,20 @@
 <html lang="{{ app.request.locale }}">
 <head>
     <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="csrf-token" content="{{ csrf_token('') }}" />
     <title>{% block title %}Lumos Shop{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('/css/colors/megna-dark.css') }}">
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
     <div id="main-wrapper">
         {{ include('layouts/header.html.twig') }}
         {{ include('layouts/sidebar.html.twig') }}
@@ -31,11 +35,5 @@
     </div>
 
 {% block javascripts %}
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/js/jquery.slimscroll.js') }}"></script>
-    <script src="{{ asset('/js/sidebarmenu.js') }}"></script>
-    <script src="{{ asset('/js/sticky-kit.min.js') }}"></script>
-    <script src="{{ asset('/js/custom.min.js') }}"></script>
-    <script src="{{ asset('/js/some.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}
