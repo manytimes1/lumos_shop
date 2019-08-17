@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Staff</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item active">Staff</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <a class="btn float-right hidden-sm-down btn-success" href=""> Create</a>
+                    <h4 class="card-title">Staff List</h4>
+                    <div class="table-responsive m-t-40">
+                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Created at</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                {% if user.roles|join('') == 'ROLE_ADMIN' or user.roles|join('') == 'ROLE_EDITOR'  %}
+                                    <tr>
+                                        <td>{{ user.profile }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.roles|join('') }}</td>
+                                        {% if user.status == 1 %}
+                                            <td>Active</td>
+                                        {% else %}
+                                            <td>Inactive</td>
+                                        {% endif %}
+                                        <td>{{ user.createdAt|date('d-m-Y') }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <a href="" class="btn waves-effect waves-light btn-primary">View</a>
+                                                {{ include('admin/staff/delete.html.twig') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

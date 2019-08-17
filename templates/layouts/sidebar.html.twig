@@ -6,18 +6,25 @@
                     <ul id="sidebarnav">
                         <li>
                             <a href="{{ path('index') }}" aria-expanded="false">
-                                <i class="fas fa-home fa-fw"></i><span class="hide-menu">Dashboard</span>
+                                <i class="fas fa-home fa-fw"></i><span class="hide-menu"> Dashboard</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('product_index') }}" aria-expanded="false">
-                                <i class=""></i><span class="hide-menu">Product</span>
+                                <i class="fas fa-th-large fa-fw"></i><span class="hide-menu"> Product</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ path('category_list') }}" aria-expanded="false">
-                                <i class=""></i><span class="hide-menu">Category</span>
+                                <i class="fas fa-list-alt fa-fw"></i><span class="hide-menu"> Category</span>
                             </a>
+                        </li>
+                        <li>
+                            {% if app.getUser.isAdmin() %}
+                                <a href="{{ path('staff_list') }}" aria-expanded="false">
+                                    <i class="fas fa-user-plus fa-fw"></i><span class="hide-menu"> Staff</span>
+                                </a>
+                            {% endif %}
                         </li>
                     </ul>
                 </nav>

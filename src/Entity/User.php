@@ -62,6 +62,16 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="date", name="created_at", nullable=false)
+     */
+    private $createdAt;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Role")
@@ -97,6 +107,7 @@ class User implements UserInterface
         $this->carts = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -152,10 +163,34 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     /**
      * @return mixed
      */
-    public function getProfile()
+    public function getProfile(): ?Profile
     {
         return $this->profile;
     }
