@@ -340,3 +340,13 @@ File: js
     return MetisMenu;
   }(jQuery);
 });
+
+$(".btn[data-toggle='collapse']").click(function() {
+  if ($(this).text() === 'Create') {
+    $(this).text('Hide');
+  } else if ($(this).text() === 'Hide') {
+    $(this).text('Create');
+  } else {
+    $(this).text('Hide');
+  }
+});

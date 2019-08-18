@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +54,11 @@ class Role
     }
 
     public function getRole()
+    {
+        return $this->getName();
+    }
+
+    public function __toString()
     {
         return $this->getName();
     }

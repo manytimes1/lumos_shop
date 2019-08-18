@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Role;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -24,7 +27,17 @@ class UserType extends AbstractType
                 'first_options' => ['label' => false],
                 'second_options' => ['label' => false],
             ])
-             ->add('profile', ProfileType::class)
+            ->add('profile', ProfileType::class)
+            ->add('roles', EntityType::class, [
+                'label' => false,
+                'class' => Role::class,
+                'mapped' => false,
+                'query_builder' => function (EntityRepository $e) {
+                    return $e->createQueryBuilder('r')
+                        ->where('r.name = :name')
+                        ->setParameter('name', 'ROLE_EDITOR');
+                }
+            ])
         ;
     }
 

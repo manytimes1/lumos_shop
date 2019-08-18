@@ -12,9 +12,11 @@
     </div>
     <div class="row">
         <div class="col-12">
+            {{ include('admin/staff/form.html.twig') }}
             <div class="card">
                 <div class="card-body">
-                    <a class="btn float-right hidden-sm-down btn-success" href=""> Create</a>
+                    <button class="btn btn-info btn-sm float-right" type="button" data-toggle="collapse"
+                            data-target="#addNewStaff">Create</button>
                     <h4 class="card-title">Staff List</h4>
                     <div class="table-responsive m-t-40">
                         <table id="example23" class="display nowrap table table-hover table-striped table-bordered">
@@ -25,28 +27,21 @@
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Created at</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for user in users %}
-                                {% if user.roles|join('') == 'ROLE_ADMIN' or user.roles|join('') == 'ROLE_EDITOR'  %}
+                                {% if user.roles|join('') == 'ROLE_ADMIN' or user.roles|join('') == 'ROLE_EDITOR' %}
                                     <tr>
                                         <td>{{ user.profile }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.roles|join('') }}</td>
-                                        {% if user.status == 1 %}
-                                            <td>Active</td>
-                                        {% else %}
-                                            <td>Inactive</td>
-                                        {% endif %}
+                                            {% if user.status == 1 %}
+                                                <td><span class="label label-success m-r-5">Active</span></td>
+                                            {% else %}
+                                                <td>Inactive</td>
+                                            {% endif %}
                                         <td>{{ user.createdAt|date('d-m-Y') }}</td>
-                                        <td>
-                                            <div class="button-group">
-                                                <a href="" class="btn waves-effect waves-light btn-primary">View</a>
-                                                {{ include('admin/staff/delete.html.twig') }}
-                                            </div>
-                                        </td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}
