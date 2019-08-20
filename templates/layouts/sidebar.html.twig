@@ -21,6 +21,13 @@
                         </li>
                         <li>
                             {% if app.getUser.isAdmin() %}
+                                <a href="{{ path('list_all_customers') }}" aria-expanded="false">
+                                    <i class="fas fa-users fa-fw"></i><span class="hide-menu"> Customer</span>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if app.getUser.isAdmin() %}
                                 <a href="{{ path('staff_list') }}" aria-expanded="false">
                                     <i class="fas fa-user-plus fa-fw"></i><span class="hide-menu"> Staff</span>
                                 </a>
