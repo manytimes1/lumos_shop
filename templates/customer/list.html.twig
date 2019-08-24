@@ -12,11 +12,12 @@
     </div>
     <div class="row">
         <div class="col-12">
-{#            {{ include('admin/staff/form.html.twig') }}#}
+            {{ include('customer/form.html.twig') }}
             <div class="card">
                 <div class="card-body">
                     <button class="btn btn-info btn-sm float-right" type="button" data-toggle="collapse"
-                            data-target="#addNew">Create</button>
+                            data-target="#addNew">Create
+                    </button>
                     <h4 class="card-title">Customer List</h4>
                     <div class="table-responsive m-t-40">
                         <table id="example23" class="display nowrap table table-hover table-striped table-bordered">
@@ -42,7 +43,10 @@
                                     <td>{{ customer.createdAt|date('d-m-Y') }}</td>
                                     <td>
                                         <div class="button-group">
-                                            <a href="" class="btn waves-effect waves-light btn-info">View</a>
+                                            <a href="{{ path('customer_detail', {'id': customer.id}) }}"
+                                               class="btn waves-effect waves-light btn-info">View</a>
+
+                                            {{ include('customer/delete.html.twig') }}
                                         </div>
                                     </td>
                                 </tr>

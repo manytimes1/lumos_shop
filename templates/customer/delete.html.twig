@@ -1,5 +1,5 @@
 {{ include('default/_delete_confirmation.html.twig') }}
-<form style="display: inline" action="" method="post" data-confirmation="true" id="delete-form">
+<form style="display: inline" action="{{ url('customer_delete', {id: customer.id}) }}" method="post" data-confirmation="true" id="delete-form">
     <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
     <button type="submit" class="btn waves-effect waves-light btn-danger">
         Delete
