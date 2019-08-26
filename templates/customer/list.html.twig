@@ -35,10 +35,10 @@
                                 <tr>
                                     <td>{{ customer.profile }}</td>
                                     <td>{{ customer.email }}</td>
-                                    {% if customer.status == 1 %}
-                                        <td><span class="label label-success m-r-5">Active</span></td>
+                                    {% if customer.enabled == 1 %}
+                                        <td><span class="label label-success m-r-5">Activated</span></td>
                                     {% else %}
-                                        <td><span class="label label-danger m-r-5">Inactive</span></td>
+                                        <td><span class="label label-danger m-r-5">Banned</span></td>
                                     {% endif %}
                                     <td>{{ customer.createdAt|date('d-m-Y') }}</td>
                                     <td>

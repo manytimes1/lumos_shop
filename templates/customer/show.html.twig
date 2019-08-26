@@ -17,9 +17,27 @@
                 <div class="card-body">
                     <center class="mt-4"> <img src="{{ customer.profile.picture }}" class="img-circle" width="150" />
                         <h4 class="card-title mt-2">{{ customer.profile }}</h4>
-                        {% if customer.status == 1 %}
-                            <span class="label label-success m-r-5">Active</span>
+                        {% if customer.enabled %}
+                            <span class="label label-success m-r-5">Activated</span>
+                        {% else %}
+                            <span class="label label-danger m-r-5">Banned</span>
                         {% endif %}
+
+                        <form action="{{ url('change_user_status', {id: customer.id}) }}" method="post">
+                            <div class="row m-t-10">
+                                <div class="col-12">
+                                    {% if customer.isEnabled() %}
+                                        <button type="submit" class="btn btn-block btn-danger">
+                                            <i class="fas fa-ban"></i> Ban
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-block btn-success">
+                                            <i class="fas fa-check"></i> Activate
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
                     </center>
                 </div>
                 <div>

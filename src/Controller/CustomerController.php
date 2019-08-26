@@ -118,7 +118,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/customer/delete/{id}", name="customer_delete")
+     * @Route("/customer/{id}/delete", name="customer_delete")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -138,5 +138,25 @@ class CustomerController extends AbstractController
         $this->addFlash('success', 'Customer deleted successfully.');
 
         return $this->redirectToRoute('list_all_customers');
+    }
+
+    /**
+     * @Route("/customer/{id}/change-status", name="change_user_status")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param User $user
+     */
+    public function changeStatus(User $user)
+    {
+        if ($user->isEnabled()) {
+            $user->setEnabled(false);
+        } else {
+            $user->setEnabled(true);
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('customer_detail', [
+            'id' => $user->getId()
+        ]);
     }
 }
