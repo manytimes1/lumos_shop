@@ -1,6 +1,6 @@
 <div class="tab-pane" id="printers" role="tabpanel">
     <div class="row">
-        {% for product in products %}
+        {% for product in paginator.results %}
             {% if product.category.name == 'Printers' and product.isAvailable() %}
                 <div class="col-md-6 col-lg-6 col-xlg-4">
                     <div class="card card-body">

@@ -6,7 +6,12 @@
             <div class="card">
                 <ul class="nav nav-tabs profile-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#computers" role="tab">
+                        <a class="nav-link active" data-toggle="tab" href="#all" role="tab">
+                            All
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#computers" role="tab">
                             Computers
                         </a>
                     </li>
@@ -27,6 +32,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
+                    {{ include('products_category/all.html.twig') }}
                     {{ include('products_category/computers.html.twig') }}
                     {{ include('products_category/laptops.html.twig') }}
                     {{ include('products_category/monitors.html.twig') }}
@@ -35,4 +41,38 @@
             </div>
         </div>
     </div>
+    {% if paginator.hasToPaginate %}
+        <div class="navigation">
+            <ul class="pagination float-right">
+                {% if paginator.hasPreviousPage %}
+                    <li class="prev">
+                        <a href="{{ path('index_paginated', {page: paginator.previousPage}) }}" rel="previous">
+                            <i class="fa fw fa-long-arrow-left"></i>
+                            Previous
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="prev disabled"><span><i class="fa fw fa-arrow-left"></i> Previous  </span></li>
+                {% endif %}
+
+                {% for i in 1..paginator.lastPage %}
+                    {% if i == paginator.currentPage %}
+                        <li class="active"><span> {{ i }} <span class="sr-only"> (current) </span></span></li>
+                    {% else %}
+                        <li><a href="{{ path('index_paginated', {page: i}) }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if paginator.hasNextPage %}
+                    <li class="next">
+                        <a href="{{ path('index_paginated', {page: paginator.nextPage}) }}" rel="next">  Next
+                            <i class="fa fw fa-arrow-right"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="next disabled"><span> Next <i class="fa fw fa-arrow-right"></i></span></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 {% endblock %}

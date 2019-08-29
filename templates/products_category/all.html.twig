@@ -1,7 +1,7 @@
-<div class="tab-pane" id="laptops" role="tabpanel">
+<div class="tab-pane active" id="all" role="tabpanel">
     <div class="row">
         {% for product in paginator.results %}
-            {% if product.category.name == 'Laptops' and product.isAvailable() %}
+            {% if product.isAvailable() %}
                 <div class="col-md-6 col-lg-6 col-xlg-4">
                     <div class="card card-body">
                         <div class="row">
