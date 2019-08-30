@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Form\ProfileType;
 use App\Form\Type\ChangePasswordType;
+use App\Repository\OrderRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,6 +68,22 @@ class UserController extends AbstractController
             'user' => $user,
             'profile' => $profile,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/my-orders", name="my_orders")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param OrderRepository $orderRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function myOrders(OrderRepository $orderRepository)
+    {
+        $user = $this->getUser();
+        $orders = $orderRepository->findBy(['user' => $user]);
+
+        return $this->render('user/my_orders.html.twig', [
+            'orders' => $orders
         ]);
     }
 }

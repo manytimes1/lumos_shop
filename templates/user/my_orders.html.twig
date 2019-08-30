@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Transactions</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item active">My Transactions</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="row">
+                    {% for order in orders %}
+                        <div class="col-md-6 col-lg-6 col-xlg-4">
+                            <div class="card card-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3 text-center">
+                                        <img src="{{ order.product.image }}" alt="product" class="img img-responsive">
+                                    </div>
+                                    <div class="col-md-8 col-lg-9">
+                                        <h4 class="mb-0">Product Name: {{ order.product.name }}</h4>
+                                        Model: {{ order.product.model }}
+
+                                        <p>Price: {{ order.product.price }}</p>
+                                        <p>Status: <span class="label label-success m-r-5">Completed</span></p>
+                                        <p>Date: {{ order.addedOn is empty ? "" : order.addedOn|date("d-m-Y g:ia") }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
