@@ -1,4 +1,4 @@
-<div class="collapse" id="addNewStaff">
+<div class="collapse" id="addNew">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Add New Staff</h4>
@@ -42,14 +42,32 @@
                                     {{ form_row(form.plainPassword.second) }}
                                 </div>
                             </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    {{ form_row(form.roles) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label>Phone</label>
-                                    {{ form_row(form.profile.phone) }}
+                                    <label>City</label>
+                                    {{ form_row(form.profile.city) }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    {{ form_row(form.profile.state) }}
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Zipcode</label>
+                                    {{ form_row(form.profile.zipCode) }}
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -60,8 +78,8 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label>Role</label>
-                                    {{ form_row(form.roles) }}
+                                    <label>Phone</label>
+                                    {{ form_row(form.profile.phone) }}
                                 </div>
                             </div>
                         </div>

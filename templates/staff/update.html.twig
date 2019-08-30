@@ -1,0 +1,38 @@
+<h4 class="card-title">Basic</h4>
+<form action="{{ url('update_staff_information', {id: employee.id} ) }}" method="post">
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        {{ form_row(form.profile.firstName) }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        {{ form_row(form.profile.lastName) }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>Username</label>
+                        {{ form_row(form.username, {'attr': {readonly: "readonly"}}) }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        {{ form_row(form.email, {'attr': {readonly: "readonly"}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <button class="btn btn-info waves-effect waves-light float-right m-t-10" type="submit">Save</button>
+        </div>
+    </div>
+</form>

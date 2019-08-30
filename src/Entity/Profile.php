@@ -38,6 +38,21 @@ class Profile
     private $location;
 
     /**
+     * @ORM\Column(name="city", nullable=true, type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(name="state", nullable=true, type="string", length=255)
+     */
+    private $state;
+
+    /**
+     * @ORM\Column(name="zip_code", nullable=true, type="integer")
+     */
+    private $zipCode;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $picture;
@@ -107,6 +122,36 @@ class Profile
     public function setLocation($location): void
     {
         $this->location = $location;
+    }
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function setState($state): void
+    {
+        $this->state = $state;
+    }
+
+    public function getZipCode()
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode($zipCode): void
+    {
+        $this->zipCode = $zipCode;
     }
 
     public function getPicture()
