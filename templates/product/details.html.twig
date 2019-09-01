@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Product Details</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content">
+                        <div class="text-center col-lg-4 col-md-6">
+                            <img src="{{ product.image }}" class="img-responsive">
+                        </div>
+                        <div>
+                            <h2 class="card-title">{{ product.name }}
+                            </h2>
+                            <p>Quantity: {{ product.quantity }}</p>
+                            <p>Price: {{ product.price }}</p>
+                        </div>
+                    </div>
+                    <div class="float-right">
+                        <a href="{{ path('add_to_cart', {id: product.id}) }}"
+                           class="btn waves-effect waves-light btn-rounded btn-outline-secondary">
+                            ADD TO CART
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#features" role="tab">
+                Features
+            </a>
+        </li>
+    </ul>
+    <div class="tab-pane active" id="features" role="tabpanel">
+        <div class="table-responsive m-t-40">
+            <table class="text-uppercase table table-hover table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <td>Brand</td>
+                        <td>{{ product.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Model</td>
+                        <td>{{ product.model }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
