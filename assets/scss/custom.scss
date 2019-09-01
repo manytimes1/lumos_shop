@@ -5,3 +5,7 @@ html {
 body {
   background-color: #383f48;
 }
+
+.fade:not(.show) {
+  opacity: inherit;
+}
