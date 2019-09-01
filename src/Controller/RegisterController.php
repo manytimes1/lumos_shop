@@ -62,6 +62,7 @@ class RegisterController extends AbstractController
             $em->persist($profile);
 
             $user->setProfile($profile);
+            $user->setEnabled(1);
             $em->persist($user);
             $em->flush();
 

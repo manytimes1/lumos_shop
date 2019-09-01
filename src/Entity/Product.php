@@ -30,6 +30,46 @@ class Product
     private $model;
 
     /**
+     * @ORM\Column(type="string", name="main_board", length=255)
+     */
+    private $mainBoard;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cpu;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ram;
+
+    /**
+     * @ORM\Column(type="string", name="ram_type", length=255)
+     */
+    private $ramType;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $hdd;
+
+    /**
+     * @ORM\Column(type="string", name="video_card")
+     */
+    private $videoCard;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $odd;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $case;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $quantity;
@@ -111,6 +151,150 @@ class Product
         $this->model = $model;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMainBoard()
+    {
+        return $this->mainBoard;
+    }
+
+    /**
+     * @param mixed $mainBoard
+     */
+    public function setMainBoard($mainBoard): void
+    {
+        $this->mainBoard = $mainBoard;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCpu()
+    {
+        return $this->cpu;
+    }
+
+    /**
+     * @param mixed $cpu
+     */
+    public function setCpu($cpu): void
+    {
+        $this->cpu = $cpu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRam()
+    {
+        return $this->ram;
+    }
+
+    /**
+     * @param mixed $ram
+     */
+    public function setRam($ram): void
+    {
+        $this->ram = $ram;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRamType()
+    {
+        return $this->ramType;
+    }
+
+    /**
+     * @param mixed $ramType
+     */
+    public function setRamType($ramType): void
+    {
+        $this->ramType = $ramType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHdd()
+    {
+        return $this->hdd;
+    }
+
+    /**
+     * @param mixed $hdd
+     */
+    public function setHdd($hdd): void
+    {
+        $this->hdd = $hdd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideoCard()
+    {
+        return $this->videoCard;
+    }
+
+    /**
+     * @param mixed $videoCard
+     */
+    public function setVideoCard($videoCard): void
+    {
+        $this->videoCard = $videoCard;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOdd()
+    {
+        return $this->odd;
+    }
+
+    /**
+     * @param mixed $odd
+     */
+    public function setOdd($odd): void
+    {
+        $this->odd = $odd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCase()
+    {
+        return $this->case;
+    }
+
+    /**
+     * @param mixed $case
+     */
+    public function setCase($case): void
+    {
+        $this->case = $case;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param mixed $carts
+     */
+    public function setCarts($carts): void
+    {
+        $this->carts = $carts;
     }
 
     public function getQuantity(): ?int

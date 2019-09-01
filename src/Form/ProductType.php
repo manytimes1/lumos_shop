@@ -31,6 +31,31 @@ class ProductType extends AbstractType
                     'placeholder' => 'Model'
                 ]
             ])
+            ->add('mainBoard', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Main Board'
+                ]
+            ])
+            ->add('cpu', IntegerType::class, [
+                'attr' => [
+                    'placeholder' => 'CPU'
+                ]
+            ])
+            ->add('ram', IntegerType::class, [
+                'attr' => [
+                    'placeholder' => 'RAM'
+                ]
+            ])
+            ->add('ramType', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Type RAM'
+                ]
+            ])
+            ->add('ramType', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Type RAM'
+                ]
+            ])
             ->add('quantity', IntegerType::class, [
                 'attr' => [
                     'placeholder' => 'Quantity'
