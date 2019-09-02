@@ -92,6 +92,38 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/cart/product/buy/{id}", name="buy_product")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param CartRepository $cartRepository
+     * @param Product $product
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function buyProduct(CartRepository $cartRepository, Product $product)
+    {
+        $user = $this->getUser();
+
+        $cartProduct = $cartRepository->findOneBy([
+            'product' => $product,
+            'user' => $user
+        ]);
+
+        if (null !== $cartProduct) {
+            $order = new Order();
+            $order->setProduct($product);
+            $order->setUser($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($order);
+            $em->remove($cartProduct);
+            $em->flush();
+        }
+
+        $this->addFlash('success', 'You have successfully purchased this product.');
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+    /**
      * @Route("/cart/buyAll", name="buy_all_products")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param CartRepository $cartRepository

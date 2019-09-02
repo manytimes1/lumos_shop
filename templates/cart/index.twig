@@ -18,6 +18,7 @@
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
                                     <th>Total</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,6 +38,11 @@
                                         <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
                                         <td>
                                             <div class="button-group">
+                                                <a href="{{ url('buy_product', {id: cart.product.id}) }}"
+                                                   class="btn waves-effect waves-light btn-outline-light">
+                                                    Buy
+                                                </a>
+
                                                 {{ include('cart/delete_product.html.twig') }}
                                             </div>
                                         </td>
