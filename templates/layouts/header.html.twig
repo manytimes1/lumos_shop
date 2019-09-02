@@ -24,7 +24,7 @@
                         <ul class="navbar-nav my-lg-0">
                             <li class="nav-item">
                                 <a href="{{ path('cart_index') }}" class="nav-link">
-                                    <i class="ti-shopping-cart"></i> Cart
+                                    <i class="ti-shopping-cart"></i> Cart ({{ app.user.carts|length }})
                                 </a>
                             </li>
                             <li class="nav-item dropdown">

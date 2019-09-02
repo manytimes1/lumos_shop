@@ -193,6 +193,14 @@ class User implements UserInterface
         return $this->createdProducts;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
     public function getRoles()
     {
         $roles = [];
