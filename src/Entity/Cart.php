@@ -18,11 +18,6 @@ class Cart
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $orderQuantity;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="carts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -34,28 +29,15 @@ class Cart
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Quantity", inversedBy="carts")
+     * @ORM\JoinColumn(name="quantity_id", referencedColumnName="id")
+     */
+    private $quantity;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getOrderQuantity()
-    {
-        return $this->orderQuantity;
-    }
-
-    public function setOrderQuantity(int $orderQuantity): self
-    {
-        $this->orderQuantity = $orderQuantity;
-
-        return $this;
-    }
-
-    public function totalPrice()
-    {
-        $result = $this->getOrderQuantity() * $this->getProduct()->getPrice();
-
-        return $result;
     }
 
     public function getProduct(): ?Product
@@ -76,5 +58,24 @@ class Cart
     public function setUser(User $user)
     {
         $this->user = $user;
+    }
+
+    public function getQuantity(): ?Quantity
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(Quantity $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function totalPrice()
+    {
+        $result = $this->getQuantity()->getValue() * $this->getProduct()->getPrice();
+
+        return $result;
     }
 }

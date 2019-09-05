@@ -28,21 +28,26 @@
                                         <td>{{ cart.product.name }}</td>
                                         <td>{{ cart.product.model }}</td>
                                         <td>
-                                            <div class="form-group">
-                                                <select id="quantity_id" class="form-control">
-                                                    <option value="1">1</option>
+                                            <form action="{{ url('update_cart', {id: cart.id}) }}" method="post">
+                                                <select name="cart[quantity]" class="form-control" onchange="this.form.submit()">
+                                                    {% for quantity in quantities %}
+                                                        {% if cart.quantity.id == quantity.id %}
+                                                            <option selected="selected" value="{{ quantity.id }}">{{ quantity.value }}</option>
+                                                        {% else %}
+                                                            <option value="{{ quantity.id }}">{{ quantity.value }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </select>
-                                            </div>
+                                            </form>
                                         </td>
                                         <td>{{ cart.product.price }}</td>
                                         <td>{{ cart.totalPrice|number_format(2, '.', ',') }}</td>
                                         <td>
                                             <div class="button-group">
-                                                <a href="{{ url('buy_product', {id: cart.product.id}) }}"
+                                                <a href="{{ url('order_product', {id: cart.product.id}) }}"
                                                    class="btn waves-effect waves-light btn-outline-light">
-                                                    Buy
+                                                    Order
                                                 </a>
-
                                                 {{ include('cart/delete_product.html.twig') }}
                                             </div>
                                         </td>
@@ -61,7 +66,7 @@
                         <div class="clearfix"></div>
                         <hr/>
                         <div class="text-right">
-                            <form action="{{ url('buy_all_products') }}" method="post">
+                            <form action="" method="post">
                                 <a href="{{ path('index') }}" class="btn btn-primary">Cancel</a>
                                 <button type="submit" class="btn btn-danger">Checkout</button>
                             </form>

@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Form\CartType;
 use App\Repository\CartRepository;
-use App\Repository\ProductRepository;
+use App\Repository\QuantityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
@@ -16,11 +18,15 @@ class CartController extends AbstractController
     /**
      * @Route("/cart", name="cart_index")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param CartRepository $cartRepository
+     * @param QuantityRepository $quantityRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(CartRepository $cartRepository)
+    public function index(CartRepository $cartRepository, QuantityRepository $quantityRepository)
     {
         $user = $this->getUser();
         $cartProducts = $cartRepository->findBy(['user' => $user]);
+        $quantities = $quantityRepository->findAll();
 
         $totalPrice = 0;
 
@@ -30,6 +36,7 @@ class CartController extends AbstractController
 
         return $this->render('cart/index.twig', [
             'carts' => $cartProducts,
+            'quantities' => $quantities,
             'total' => $totalPrice
         ]);
     }
@@ -38,7 +45,6 @@ class CartController extends AbstractController
      * @Route("/cart/add/{id}", name="add_to_cart")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param CartRepository $cartRepository
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addProduct(Product $product, CartRepository $cartRepository)
@@ -59,7 +65,6 @@ class CartController extends AbstractController
             $cart->setUser($user);
         }
 
-        $cart->setOrderQuantity(1);
         $em = $this->getDoctrine()->getManager();
         $em->persist($cart);
         $em->flush();
@@ -92,85 +97,21 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/product/buy/{id}", name="buy_product")
+     * @Route("/cart/update/{id}", name="update_cart")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @param CartRepository $cartRepository
-     * @param Product $product
+     * @param Request $request
+     * @param Cart $cart
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function buyProduct(CartRepository $cartRepository, Product $product)
+    public function updateCart(Request $request, Cart $cart)
     {
-        $user = $this->getUser();
+        $form = $this->createForm(CartType::class, $cart);
+        $form->handleRequest($request);
 
-        $cartProduct = $cartRepository->findOneBy([
-            'product' => $product,
-            'user' => $user
-        ]);
+        $this->getDoctrine()->getManager()->flush();
 
-        if (null !== $cartProduct) {
-            $order = new Order();
-            $order->setProduct($product);
-            $order->setUser($user);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($order);
-            $em->remove($cartProduct);
-            $em->flush();
-        }
-
-        $this->addFlash('success', 'You have successfully purchased this product.');
+        $this->addFlash('success', 'Cart updated successfully.');
 
         return $this->redirectToRoute('cart_index');
-    }
-
-    /**
-     * @Route("/cart/buyAll", name="buy_all_products")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @param CartRepository $cartRepository
-     * @param ProductRepository $productRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function buyAllProducts(CartRepository $cartRepository, ProductRepository $productRepository)
-    {
-        $user = $this->getUser();
-        $profile = $user->getProfile();
-        $products = $productRepository->findAll();
-        $cartProducts = $cartRepository->findBy([
-            'product' => $products,
-            'user' => $user
-        ]);
-
-        $em = $this->getDoctrine()->getManager();
-
-        foreach ($cartProducts as $cartProduct) {
-            if ($cartProduct->totalPrice() > $profile->getCash()) {
-                $this->addFlash('danger', "You don't have enough money to this action.");
-
-                return $this->redirectToRoute('cart_index');
-            }
-
-            $remainingCash = $profile->getCash() - $cartProduct->totalPrice();
-            $profile->setCash($remainingCash);
-
-            /** @var Cart $cartProduct */
-            $product = $cartProduct->getProduct();
-            $remainingQuantity = $product->getQuantity() - $cartProduct->getOrderQuantity();
-            $product->setQuantity($remainingQuantity);
-
-            if ($product->getQuantity() === 0) {
-                $product->setIsAvailable(0);
-            }
-
-            $order = new Order();
-            $order->setProduct($product);
-            $order->setUser($user);
-
-            $em->persist($order);
-            $em->remove($cartProduct);
-        }
-
-        $em->flush();
-
-        return $this->redirectToRoute('index');
     }
 }
