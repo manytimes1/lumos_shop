@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor mb-0 mt-0">Configuration</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="">Configuration</a></li>
+                <li class="breadcrumb-item active">Role</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        {{ include('configuration/menu-tab.html.twig') }}
+                        <div class="col-10 col-lg-10 col-md-10">
+                            <div class="row">
+                                {{ include('configuration/role/form.html.twig') }}
+                                <div class="col-12 col-sm-8 col-md-8">
+                                    <h4 class="card-title">Role List</h4>
+                                    <div class="table-responsive">
+                                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for role in roles %}
+                                                <tr>
+                                                    <td>{{ role.name }}</td>
+                                                    <td>
+                                                        <div class="button-group">
+                                                            {{ include('configuration/role/delete.html.twig') }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
