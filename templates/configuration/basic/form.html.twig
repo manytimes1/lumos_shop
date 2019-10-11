@@ -1,0 +1,15 @@
+{% if form.configs | length > 0 %}
+    <div class="col-10 col-lg-10 col-md-10">
+        <form action="{{ path('change_configuration') }}" method="post">
+            <h4 class="card-title">Basic</h4>
+            <div class="row">
+                {% for config in form.configs %}
+                    <div class="col-12 col-md-6">
+                        {{ form_row(config.value, {'attr': {'placeholder': config.vars.value.name  }}) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="btn btn-info waves-effect waves-light float-right" type="submit">Save</button>
+        </form>
+    </div>
+{% endif %}
