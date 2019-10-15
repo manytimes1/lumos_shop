@@ -89,11 +89,25 @@ class RoleController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
+        $roles = $this->repo->findBy([
+            'name' => [
+                'ROLE_ADMIN',
+                'ROLE_EDITOR',
+                'ROLE_USER'
+            ]
+        ]);
+
+        if (in_array($role, $roles)) {
+            $this->addFlash('danger', 'Default role cannot be deleted.');
+
+            return  $this->redirectToRoute('role_configuration');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($role);
         $em->flush();
 
-        $this->addFlash('success', 'Role deleted.');
+        $this->addFlash('success', 'Role deleted');
 
         return $this->redirectToRoute('role_configuration');
     }
